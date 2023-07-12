@@ -1,0 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,wght@0,300;0,600;0,800;1,300;1,600;1,800&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+root {
+    font-family: 'Nunito Sans', sans-serif !important;
+}
+
+.shadow--medium {
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.25);
+}
