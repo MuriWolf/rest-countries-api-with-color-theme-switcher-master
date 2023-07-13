@@ -11,6 +11,8 @@
 	let searchCountry = '';
   /*** @type {boolean}*/
   let hasCountries;
+/*** @type {any} */
+  let countriesName = [];
 
 	onMount(async () => {
 		await fetch('data.json')

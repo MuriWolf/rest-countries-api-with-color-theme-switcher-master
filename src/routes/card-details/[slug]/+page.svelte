@@ -1,7 +1,8 @@
 <script>
 	import { onMount } from 'svelte';
-	/*** @type {{ data: {slug: string | number} }}*/
+	/*** @type {any}*/
 	export let data;
+	/**
 
 	/**
 	 * @typedef {Object} Country
@@ -33,18 +34,18 @@
 	 */
 	/** @type {Country} */
 	let countryData;
-    /**
+	/**
 	 * @type {any}
 	 */
-    let countryLanguages = [];
+	let countryLanguages = [];
 	onMount(async () => {
 		await fetch('../data.json')
 			.then((res) => res.json())
 			.then((dataJson) => {
 				countryData = dataJson.find((/** @type {any}*/ obj) => obj['name'] === data.data.slug);
-                countryData.languages.forEach(lang => {
-                    countryLanguages.push(lang.name);
-                })
+				countryData.languages.forEach((lang) => {
+					countryLanguages.push(lang.name);
+				});
 			});
 	});
 </script>
@@ -56,7 +57,7 @@
 		<img src={countryData.flags.png} alt="" />
 		<h1>{countryData.name}</h1>
 		<ul class="flex flex-col gap-2">
-			<li><strong>Population: </strong>{countryData.population.toLocaleString("en")}</li>
+			<li><strong>Population: </strong>{countryData.population.toLocaleString('en')}</li>
 			<li><strong>Native Name: </strong>{countryData.nativeName}</li>
 			<li><strong>Region: </strong>{countryData.region}</li>
 			<li><strong>Sub Region: </strong>{countryData.subregion}</li>
@@ -64,14 +65,17 @@
 		</ul>
 		<ul class="flex flex-col gap-2 mt-8">
 			<li><strong>Top Level Domain: </strong>{countryData.topLevelDomain}</li>
-			<li><strong>Currencies: </strong>{countryData.currencies[0].name}</li> <li><strong>languages: </strong>{countryLanguages.join(', ')}</li>
+			<li><strong>Currencies: </strong>{countryData.currencies[0].name}</li>
+			<li><strong>languages: </strong>{countryLanguages.join(', ')}</li>
 		</ul>
-		<h2 class="text-xl font-semibold">Border Countries</h2>
-		<div class="flex gap-1">
-			{#each countryData.borders as borderCountry}
-				<div class="bg-red-400 px-2">{borderCountry}</div>
-			{/each}
-		</div>
+		{#if countryData.borders}
+			<h2 class="text-xl font-semibold">Border Countries</h2>
+			<div class="flex gap-1">
+				{#each countryData.borders as borderCountry}
+					<div class="bg-red-400 px-2">{borderCountry}</div>
+				{/each}
+			</div>
+		{/if}
 	{:else}
 		<p>loading...</p>
 	{/if}
